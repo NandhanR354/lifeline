@@ -1,0 +1,266 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-overview">
+    <div class="welcome-section">
+        <h2>Welcome back, Patient 01!</h2>
+        <p>Here's your health overview for today</p>
+    </div>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-pills"></i>
+            </div>
+            <div class="stat-info">
+                <h3>2</h3>
+                <p>Medications Today</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-calendar-check"></i>
+            </div>
+            <div class="stat-info">
+                <h3>3</h3>
+                <p>Appointments This Week</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-comment-medical"></i>
+            </div>
+            <div class="stat-info">
+                <h3>5</h3>
+                <p>Unread Messages</p>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-info">
+                <h3>87%</h3>
+                <p>Recovery Progress</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="dashboard-modules">
+        <!-- Communication Section -->
+        <div class="module-card">
+            <div class="module-header">
+                <h3><i class="fas fa-comments"></i> Communication</h3>
+                <a href="{{ url_for('chat') }}" class="btn-link">View All</a>
+            </div>
+            <div class="module-content">
+                <p>Chat with your care team and family members</p>
+                <div class="recent-messages">
+                    <div class="message-preview">
+                        <div class="message-sender">Nurse Sarah</div>
+                        <div class="message-text">Your therapy session has been rescheduled to 11 AM today.</div>
+                        <div class="message-time">10:30 AM</div>
+                    </div>
+                    <div class="message-preview">
+                        <div class="message-sender">Dr. Johnson</div>
+                        <div class="message-text">Test results are looking good. We'll discuss in our meeting.</div>
+                        <div class="message-time">Yesterday</div>
+                    </div>
+                </div>
+                <div class="help-request-quick">
+                    <h4>Quick Help Request</h4>
+                    <div class="quick-options">
+                        <button class="quick-btn urgent">Urgent</button>
+                        <button class="quick-btn technical">Technical Support</button>
+                        <button class="quick-btn comfort">Comfort Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mental Health Section -->
+        <div class="module-card">
+            <div class="module-header">
+                <h3><i class="fas fa-brain"></i> Mental Health</h3>
+                <a href="{{ url_for('mood_checkin') }}" class="btn-link">Check In</a>
+            </div>
+            <div class="module-content">
+                <p>How are you feeling today?</p>
+                <div class="mood-options-quick">
+                    <div class="mood-option-quick" data-mood="terrible">
+                        <div class="mood-icon-quick terrible">😢</div>
+                        <span>Terrible</span>
+                    </div>
+                    <div class="mood-option-quick" data-mood="bad">
+                        <div class="mood-icon-quick bad">😕</div>
+                        <span>Bad</span>
+                    </div>
+                    <div class="mood-option-quick" data-mood="good">
+                        <div class="mood-icon-quick good">😊</div>
+                        <span>Good</span>
+                    </div>
+                    <div class="mood-option-quick" data-mood="great">
+                        <div class="mood-icon-quick great">😄</div>
+                        <span>Great</span>
+                    </div>
+                </div>
+                <div class="mood-history-preview">
+                    <h4>Recent Check-ins</h4>
+                    <div class="mood-history-list">
+                        <div class="mood-history-item">
+                            <div class="mood-history-icon great">😄</div>
+                            <div class="mood-history-details">
+                                <div class="mood-history-mood">Great</div>
+                                <div class="mood-history-time">Today, 9:15 AM</div>
+                            </div>
+                        </div>
+                        <div class="mood-history-item">
+                            <div class="mood-history-icon good">😊</div>
+                            <div class="mood-history-details">
+                                <div class="mood-history-mood">Good</div>
+                                <div class="mood-history-time">Yesterday, 10:30 AM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Treatment Tracker Section -->
+        <div class="module-card">
+            <div class="module-header">
+                <h3><i class="fas fa-calendar-check"></i> Treatment Tracker</h3>
+                <a href="{{ url_for('treatment_tracker') }}" class="btn-link">View All</a>
+            </div>
+            <div class="module-content">
+                <div class="treatment-schedule-preview">
+                    <h4>Today's Schedule</h4>
+                    <div class="schedule-list">
+                        <div class="schedule-item completed">
+                            <div class="schedule-time">8:00 AM</div>
+                            <div class="schedule-details">
+                                <div class="schedule-title">Medication</div>
+                                <div class="schedule-description">Antibiotics with breakfast</div>
+                            </div>
+                            <div class="schedule-status"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                        
+                        <div class="schedule-item upcoming">
+                            <div class="schedule-time">10:00 AM</div>
+                            <div class="schedule-details">
+                                <div class="schedule-title">Physical Therapy</div>
+                                <div class="schedule-description">Session with therapist</div>
+                            </div>
+                            <div class="schedule-status"><i class="fas fa-clock"></i></div>
+                        </div>
+                        
+                        <div class="schedule-item">
+                            <div class="schedule-time">2:00 PM</div>
+                            <div class="schedule-details">
+                                <div class="schedule-title">Doctor's Consultation</div>
+                                <div class="schedule-description">Follow-up appointment</div>
+                            </div>
+                            <div class="schedule-status"><i class="fas fa-calendar"></i></div>
+                        </div>
+                        
+                        <div class="schedule-item">
+                            <div class="schedule-time">4:30 PM</div>
+                            <div class="schedule-details">
+                                <div class="schedule-title">Rehabilitation Exercises</div>
+                                <div class="schedule-description">Daily mobility exercises</div>
+                            </div>
+                            <div class="schedule-status"><i class="fas fa-dumbbell"></i></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress-preview">
+                    <h4>Recovery Progress</h4>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 87%"></div>
+                        </div>
+                        <div class="progress-text">87% Complete</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Quick mood selection
+document.querySelectorAll('.mood-option-quick').forEach(option => {
+    option.addEventListener('click', function() {
+        const mood = this.getAttribute('data-mood');
+        
+        // Remove active class from all options
+        document.querySelectorAll('.mood-option-quick').forEach(opt => {
+            opt.classList.remove('active');
+        });
+        
+        // Add active class to clicked option
+        this.classList.add('active');
+        
+        // Show confirmation (in real app, this would send to server)
+        showNotification(`Mood recorded: ${this.querySelector('span').textContent}`, 'success');
+        
+        // In a real app, you would send this to the server
+        // fetch('/api/mood', {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify({mood: mood})
+        // });
+    });
+});
+
+// Quick help request buttons
+document.querySelectorAll('.quick-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        const requestType = this.textContent;
+        showNotification(`Help request sent: ${requestType}`, 'info');
+        
+        // In a real app, you would send this to the server
+        // fetch('/api/help-request', {
+        //     method: 'POST',
+        //     headers: {'Content-Type': 'application/json'},
+        //     body: JSON.stringify({
+        //         priority: requestType === 'Urgent' ? 'high' : 'medium',
+        //         category: requestType,
+        //         description: `Quick ${requestType} request from dashboard`
+        //     })
+        // });
+    });
+});
+
+function showNotification(message, type) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.remove()">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

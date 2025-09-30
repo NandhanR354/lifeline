@@ -1,0 +1,242 @@
+<!-- templates/mood_checkin.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mood-checkin-container">
+    <div class="mood-checkin-header">
+        <h2>Mental Health Monitoring</h2>
+        <p>Track your mood daily by filling in the emotional check-in form below</p>
+    </div>
+
+    <div class="mood-content">
+        <!-- Mood Selection -->
+        <div class="mood-selection-section">
+            <h3>How are you feeling today?</h3>
+            <div class="mood-options-large">
+                <div class="mood-option-large" data-mood="terrible">
+                    <div class="mood-icon-large terrible">😢</div>
+                    <div class="mood-label">Terrible</div>
+                    <div class="mood-description">Really struggling today</div>
+                </div>
+                
+                <div class="mood-option-large" data-mood="bad">
+                    <div class="mood-icon-large bad">😕</div>
+                    <div class="mood-label">Bad</div>
+                    <div class="mood-description">Not feeling great</div>
+                </div>
+                
+                <div class="mood-option-large" data-mood="neutral">
+                    <div class="mood-icon-large neutral">😐</div>
+                    <div class="mood-label">Neutral</div>
+                    <div class="mood-description">Okay, could be better</div>
+                </div>
+                
+                <div class="mood-option-large" data-mood="good">
+                    <div class="mood-icon-large good">😊</div>
+                    <div class="mood-label">Good</div>
+                    <div class="mood-description">Feeling pretty good</div>
+                </div>
+                
+                <div class="mood-option-large" data-mood="great">
+                    <div class="mood-icon-large great">😄</div>
+                    <div class="mood-label">Great</div>
+                    <div class="mood-description">Excellent mood today!</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Section -->
+        <div class="mood-notes-section">
+            <h3>Additional Notes (Optional)</h3>
+            <textarea id="mood-notes" placeholder="Tell us more about how you're feeling... What's contributing to your mood today? Any specific concerns or positive experiences?"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mood-submit-section">
+            <button id="submit-mood" class="btn btn-primary btn-large" disabled>
+                <i class="fas fa-check-circle"></i> Submit Mood Check-in
+            </button>
+        </div>
+
+        <!-- Mood History -->
+        <div class="mood-history-section">
+            <div class="section-header">
+                <h3><i class="fas fa-history"></i> Recent Mood History</h3>
+                <button id="refresh-history" class="btn btn-outline">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+            
+            <div class="mood-history-list">
+                <div class="mood-history-item">
+                    <div class="mood-history-icon great">😄</div>
+                    <div class="mood-history-details">
+                        <div class="mood-history-mood">Great</div>
+                        <div class="mood-history-notes">Feeling much better today after a good night's sleep</div>
+                        <div class="mood-history-time">Today, 9:15 AM</div>
+                    </div>
+                </div>
+                
+                <div class="mood-history-item">
+                    <div class="mood-history-icon good">😊</div>
+                    <div class="mood-history-details">
+                        <div class="mood-history-mood">Good</div>
+                        <div class="mood-history-notes">Therapy session went well, feeling optimistic</div>
+                        <div class="mood-history-time">Yesterday, 10:30 AM</div>
+                    </div>
+                </div>
+                
+                <div class="mood-history-item">
+                    <div class="mood-history-icon neutral">😐</div>
+                    <div class="mood-history-details">
+                        <div class="mood-history-mood">Neutral</div>
+                        <div class="mood-history-notes">A bit tired but managing okay</div>
+                        <div class="mood-history-time">Oct 3, 2:15 PM</div>
+                    </div>
+                </div>
+                
+                <div class="mood-history-item">
+                    <div class="mood-history-icon bad">😕</div>
+                    <div class="mood-history-details">
+                        <div class="mood-history-mood">Bad</div>
+                        <div class="mood-history-notes">Struggling with pain today</div>
+                        <div class="mood-history-time">Oct 2, 11:45 AM</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mood Statistics -->
+        <div class="mood-stats-section">
+            <h3>Mood Overview</h3>
+            <div class="stats-grid">
+                <div class="mood-stat-card">
+                    <div class="stat-value">14</div>
+                    <div class="stat-label">Total Check-ins</div>
+                </div>
+                
+                <div class="mood-stat-card">
+                    <div class="stat-value">64%</div>
+                    <div class="stat-label">Positive Days</div>
+                </div>
+                
+                <div class="mood-stat-card">
+                    <div class="stat-value">7</div>
+                    <div class="stat-label">Consecutive Days</div>
+                </div>
+                
+                <div class="mood-stat-card">
+                    <div class="stat-value">3.8</div>
+                    <div class="stat-label">Average Mood</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let selectedMood = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Mood selection
+    document.querySelectorAll('.mood-option-large').forEach(option => {
+        option.addEventListener('click', function() {
+            // Remove selected class from all options
+            document.querySelectorAll('.mood-option-large').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            this.classList.add('selected');
+            selectedMood = this.getAttribute('data-mood');
+            
+            // Enable submit button
+            document.getElementById('submit-mood').disabled = false;
+        });
+    });
+    
+    // Submit mood
+    document.getElementById('submit-mood').addEventListener('click', function() {
+        if (!selectedMood) {
+            alert('Please select your mood first.');
+            return;
+        }
+        
+        const notes = document.getElementById('mood-notes').value;
+        
+        // Show loading state
+        this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+        this.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+            // In real app, this would be:
+            // fetch('/api/mood', {
+            //     method: 'POST',
+            //     headers: {'Content-Type': 'application/json'},
+            //     body: JSON.stringify({mood: selectedMood, notes: notes})
+            // })
+            
+            // Show success message
+            showNotification(`Mood recorded: ${selectedMood.charAt(0).toUpperCase() + selectedMood.slice(1)}`, 'success');
+            
+            // Reset form
+            resetForm();
+            
+        }, 1000);
+    });
+    
+    // Refresh history
+    document.getElementById('refresh-history').addEventListener('click', function() {
+        this.querySelector('i').classList.add('fa-spin');
+        
+        setTimeout(() => {
+            this.querySelector('i').classList.remove('fa-spin');
+            showNotification('Mood history updated', 'info');
+        }, 1000);
+    });
+});
+
+function resetForm() {
+    // Reset selection
+    document.querySelectorAll('.mood-option-large').forEach(opt => {
+        opt.classList.remove('selected');
+    });
+    selectedMood = null;
+    
+    // Clear notes
+    document.getElementById('mood-notes').value = '';
+    
+    // Reset button
+    const submitBtn = document.getElementById('submit-mood');
+    submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Submit Mood Check-in';
+    submitBtn.disabled = true;
+}
+
+function showNotification(message, type) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.remove()">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 3 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 3000);
+}
+</script>
+{% endblock %}

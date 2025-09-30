@@ -1,0 +1,242 @@
+<!-- templates/treatment_tracker.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="treatment-tracker-container">
+    <div class="treatment-header">
+        <h2>Treatment and Recovery Tracker</h2>
+        <p>Here is your current treatment schedule and recovery status</p>
+    </div>
+
+    <div class="treatment-content">
+        <!-- Today's Schedule -->
+        <div class="treatment-section">
+            <div class="section-header">
+                <h3><i class="fas fa-calendar-day"></i> Today's Schedule</h3>
+                <span class="current-date">{{ now.strftime('%A, %B %d, %Y') if now else '' }}</span>
+            </div>
+            
+            <div class="schedule-cards">
+                <div class="schedule-card completed">
+                    <div class="card-header">
+                        <div class="task-time">8:00 AM</div>
+                        <div class="task-status completed">Completed</div>
+                    </div>
+                    <div class="card-body">
+                        <h4>Medication: Antibiotic</h4>
+                        <p>Take prescribed antibiotics with breakfast</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="task-type medication">Medication</span>
+                    </div>
+                </div>
+                
+                <div class="schedule-card upcoming">
+                    <div class="card-header">
+                        <div class="task-time">10:00 AM</div>
+                        <div class="task-status upcoming">Upcoming</div>
+                    </div>
+                    <div class="card-body">
+                        <h4>Physical Therapy</h4>
+                        <p>Session with therapist Sarah</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="task-type therapy">Therapy</span>
+                    </div>
+                </div>
+                
+                <div class="schedule-card">
+                    <div class="card-header">
+                        <div class="task-time">2:00 PM</div>
+                        <div class="task-status pending">Pending</div>
+                    </div>
+                    <div class="card-body">
+                        <h4>Doctor's Consultation</h4>
+                        <p>Follow-up appointment with Dr. Johnson</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="task-type appointment">Appointment</span>
+                    </div>
+                </div>
+                
+                <div class="schedule-card">
+                    <div class="card-header">
+                        <div class="task-time">4:30 PM</div>
+                        <div class="task-status pending">Pending</div>
+                    </div>
+                    <div class="card-body">
+                        <h4>Rehabilitation Exercises</h4>
+                        <p>Complete daily mobility exercises</p>
+                    </div>
+                    <div class="card-footer">
+                        <span class="task-type exercise">Exercise</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weekly Schedule -->
+        <div class="treatment-section">
+            <div class="section-header">
+                <h3><i class="fas fa-calendar-week"></i> Weekly Schedule</h3>
+            </div>
+            
+            <div class="weekly-schedule">
+                <div class="week-day">
+                    <div class="day-header">
+                        <h4>Monday</h4>
+                        <span class="day-date">Today</span>
+                    </div>
+                    <ul class="day-tasks">
+                        <li>Medication (8 AM)</li>
+                        <li>Physical Therapy (10 AM)</li>
+                        <li>Doctor's Consultation (2 PM)</li>
+                        <li>Rehabilitation Exercises (4:30 PM)</li>
+                    </ul>
+                </div>
+                
+                <div class="week-day">
+                    <div class="day-header">
+                        <h4>Tuesday</h4>
+                        <span class="day-date">Tomorrow</span>
+                    </div>
+                    <ul class="day-tasks">
+                        <li>Medication (8 AM)</li>
+                        <li>Blood Test (9 AM)</li>
+                        <li>Rehabilitation Exercises (3 PM)</li>
+                    </ul>
+                </div>
+                
+                <div class="week-day">
+                    <div class="day-header">
+                        <h4>Wednesday</h4>
+                        <span class="day-date">Oct 2</span>
+                    </div>
+                    <ul class="day-tasks">
+                        <li>Medication (8 AM)</li>
+                        <li>Physical Therapy (10 AM)</li>
+                        <li>Counseling Session (1 PM)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracking -->
+        <div class="treatment-section">
+            <div class="section-header">
+                <h3><i class="fas fa-chart-line"></i> Recovery Progress</h3>
+            </div>
+            
+            <div class="progress-grid">
+                <div class="progress-card">
+                    <div class="progress-info">
+                        <h4>Overall Recovery</h4>
+                        <div class="progress-percentage">87%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 87%"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <span>Started: Oct 1</span>
+                        <span>Estimated: Oct 30</span>
+                    </div>
+                </div>
+                
+                <div class="progress-card">
+                    <div class="progress-info">
+                        <h4>Medication Adherence</h4>
+                        <div class="progress-percentage">95%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 95%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-card">
+                    <div class="progress-info">
+                        <h4>Therapy Completion</h4>
+                        <div class="progress-percentage">78%</div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Treatment Timeline -->
+        <div class="treatment-section">
+            <div class="section-header">
+                <h3><i class="fas fa-road"></i> Treatment Timeline</h3>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item completed">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Initial Assessment</h4>
+                        <span class="timeline-date">Oct 1, 2024</span>
+                        <p>Completed initial health assessment and treatment plan</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item completed">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Medication Started</h4>
+                        <span class="timeline-date">Oct 2, 2024</span>
+                        <p>Began antibiotic treatment regimen</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item current">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Therapy Phase</h4>
+                        <span class="timeline-date">Oct 5-20, 2024</span>
+                        <p>Physical therapy and rehabilitation exercises</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item upcoming">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Progress Evaluation</h4>
+                        <span class="timeline-date">Oct 25, 2024</span>
+                        <p>Comprehensive evaluation with medical team</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item upcoming">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Recovery Complete</h4>
+                        <span class="timeline-date">Oct 30, 2024</span>
+                        <p>Expected completion of treatment program</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Update current date
+    const now = new Date();
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.querySelector('.current-date').textContent = now.toLocaleDateString('en-US', options);
+    
+    // Add click handlers for schedule cards
+    document.querySelectorAll('.schedule-card').forEach(card => {
+        card.addEventListener('click', function() {
+            const taskTitle = this.querySelector('h4').textContent;
+            const taskTime = this.querySelector('.task-time').textContent;
+            alert(`Task: ${taskTitle}\nTime: ${taskTime}\n\nThis would open a detailed view in a real application.`);
+        });
+    });
+});
+</script>
+{% endblock %}

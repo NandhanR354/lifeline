@@ -1,0 +1,844 @@
+<!-- templates/chat.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="chat-container">
+    <!-- Conversations Sidebar -->
+    <div class="conversations-sidebar">
+        <div class="conversations-header">
+            <h3><i class="fas fa-comments"></i> Messages</h3>
+            <button class="btn btn-primary btn-sm" id="new-conversation">
+                <i class="fas fa-plus"></i> New
+            </button>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search conversations..." id="conversation-search">
+            </div>
+        </div>
+        
+        <div class="conversations-list" id="conversations-list">
+            <!-- Active Conversation -->
+            <div class="conversation-item active" data-conversation="nurse-sarah">
+                <div class="conversation-avatar nurse">
+                    <i class="fas fa-user-nurse"></i>
+                </div>
+                <div class="conversation-details">
+                    <div class="conversation-title">Nurse Sarah</div>
+                    <div class="conversation-preview">Your therapy session has been rescheduled to 11 AM today.</div>
+                    <div class="conversation-meta">
+                        <span class="conversation-time">10:30 AM</span>
+                        <span class="unread-badge">2</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Other Conversations -->
+            <div class="conversation-item" data-conversation="dr-johnson">
+                <div class="conversation-avatar doctor">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="conversation-details">
+                    <div class="conversation-title">Dr. Johnson</div>
+                    <div class="conversation-preview">Test results are looking good. We'll discuss in our meeting.</div>
+                    <div class="conversation-meta">
+                        <span class="conversation-time">Yesterday</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="conversation-item" data-conversation="support-team">
+                <div class="conversation-avatar support">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="conversation-details">
+                    <div class="conversation-title">Support Team</div>
+                    <div class="conversation-preview">How can we help you today?</div>
+                    <div class="conversation-meta">
+                        <span class="conversation-time">Oct 2</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="conversation-item" data-conversation="family-mom">
+                <div class="conversation-avatar family">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="conversation-details">
+                    <div class="conversation-title">Mom</div>
+                    <div class="conversation-preview">Thinking of you! How are you feeling today?</div>
+                    <div class="conversation-meta">
+                        <span class="conversation-time">Oct 1</span>
+                        <span class="unread-badge">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Help Request Section -->
+        <div class="help-request-section">
+            <h4><i class="fas fa-life-ring"></i> Quick Help</h4>
+            <div class="help-options">
+                <button class="help-option urgent" data-type="urgent">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Urgent Help</span>
+                </button>
+                <button class="help-option technical" data-type="technical">
+                    <i class="fas fa-tools"></i>
+                    <span>Technical Support</span>
+                </button>
+                <button class="help-option comfort" data-type="comfort">
+                    <i class="fas fa-bed"></i>
+                    <span>Comfort Request</span>
+                </button>
+                <button class="help-option medical" data-type="medical">
+                    <i class="fas fa-stethoscope"></i>
+                    <span>Medical Question</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat Main Area -->
+    <div class="chat-main">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div class="chat-info">
+                <div class="chat-avatar nurse">
+                    <i class="fas fa-user-nurse"></i>
+                </div>
+                <div class="chat-details">
+                    <div class="chat-title">Nurse Sarah</div>
+                    <div class="chat-status">
+                        <span class="status-indicator online"></span>
+                        Online - Usually replies in minutes
+                    </div>
+                </div>
+            </div>
+            <div class="chat-actions">
+                <button class="btn-icon" title="Voice Call">
+                    <i class="fas fa-phone"></i>
+                </button>
+                <button class="btn-icon" title="Video Call">
+                    <i class="fas fa-video"></i>
+                </button>
+                <button class="btn-icon" title="More options">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Chat Messages Area -->
+        <div class="chat-messages" id="chat-messages">
+            <!-- Message Date Divider -->
+            <div class="message-divider">
+                <span>Today</span>
+            </div>
+            
+            <!-- Received Messages -->
+            <div class="message other">
+                <div class="message-avatar nurse">
+                    <i class="fas fa-user-nurse"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-sender">Nurse Sarah</div>
+                    <div class="message-bubble">
+                        Hello John! How are you feeling today?
+                    </div>
+                    <div class="message-time">10:15 AM</div>
+                </div>
+            </div>
+            
+            <!-- Sent Messages -->
+            <div class="message own">
+                <div class="message-content">
+                    <div class="message-bubble">
+                        I'm doing better today, thank you for asking. The medication seems to be helping.
+                    </div>
+                    <div class="message-time">10:16 AM</div>
+                </div>
+                <div class="message-status">
+                    <i class="fas fa-check-double read"></i>
+                </div>
+            </div>
+            
+            <!-- Received Message -->
+            <div class="message other">
+                <div class="message-avatar nurse">
+                    <i class="fas fa-user-nurse"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-sender">Nurse Sarah</div>
+                    <div class="message-bubble">
+                        That's great to hear! I wanted to let you know that your therapy session has been rescheduled to 11 AM today instead of 10 AM.
+                    </div>
+                    <div class="message-time">10:30 AM</div>
+                </div>
+            </div>
+            
+            <!-- Sent Message -->
+            <div class="message own">
+                <div class="message-content">
+                    <div class="message-bubble">
+                        Thank you for letting me know. I'll be ready at 11 AM.
+                    </div>
+                    <div class="message-time">10:31 AM</div>
+                </div>
+                <div class="message-status">
+                    <i class="fas fa-check-double read"></i>
+                </div>
+            </div>
+            
+            <!-- Received Message -->
+            <div class="message other">
+                <div class="message-avatar nurse">
+                    <i class="fas fa-user-nurse"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-sender">Nurse Sarah</div>
+                    <div class="message-bubble">
+                        Perfect! The therapist will meet you in the rehabilitation room. Remember to wear comfortable clothing.
+                    </div>
+                    <div class="message-time">10:32 AM</div>
+                </div>
+            </div>
+
+            <!-- System Message -->
+            <div class="message system">
+                <div class="message-bubble">
+                    <i class="fas fa-info-circle"></i>
+                    Your help request has been received. A staff member will respond shortly.
+                </div>
+                <div class="message-time">10:35 AM</div>
+            </div>
+        </div>
+        
+        <!-- Chat Input Area -->
+        <div class="chat-input">
+            <div class="input-actions">
+                <button class="btn-icon" title="Attach file">
+                    <i class="fas fa-paperclip"></i>
+                </button>
+                <button class="btn-icon" title="Add emoji">
+                    <i class="fas fa-smile"></i>
+                </button>
+                <button class="btn-icon" title="Record voice message">
+                    <i class="fas fa-microphone"></i>
+                </button>
+            </div>
+            <input type="text" id="message-input" placeholder="Type your message here...">
+            <button id="send-message" class="btn btn-primary">
+                <i class="fas fa-paper-plane"></i> Send
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Help Request Modal -->
+<div id="help-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-life-ring"></i> Request Help</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="help-form">
+                <div class="form-group">
+                    <label for="help-priority">Priority Level</label>
+                    <select id="help-priority" required>
+                        <option value="">Select Priority</option>
+                        <option value="urgent">🔴 Urgent - Immediate attention needed</option>
+                        <option value="high">🟠 High - Important but not emergency</option>
+                        <option value="medium">🟡 Medium - Standard request</option>
+                        <option value="low">🟢 Low - When convenient</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="help-category">Request Type</label>
+                    <select id="help-category" required>
+                        <option value="">Select Category</option>
+                        <option value="medical">👨‍⚕️ Medical Assistance</option>
+                        <option value="pain">💊 Pain Management</option>
+                        <option value="technical">🖥️ Technical Support</option>
+                        <option value="comfort">🛌 Comfort Request</option>
+                        <option value="food">🍽️ Food/Meal Related</option>
+                        <option value="bathroom">🚻 Bathroom Assistance</option>
+                        <option value="other">❓ Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="help-description">Description</label>
+                    <textarea id="help-description" placeholder="Please describe what you need help with in detail..." required rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="urgent-callback">
+                        <span class="checkmark"></span>
+                        Request immediate callback
+                    </label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" id="cancel-help">Cancel</button>
+            <button class="btn btn-primary" id="submit-help">
+                <i class="fas fa-paper-plane"></i> Submit Request
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- New Conversation Modal -->
+<div id="new-conversation-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3><i class="fas fa-user-plus"></i> Start New Conversation</h3>
+            <button class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+            <div class="contact-list">
+                <div class="contact-item" data-contact="nurse-sarah">
+                    <div class="contact-avatar nurse">
+                        <i class="fas fa-user-nurse"></i>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-name">Nurse Sarah</div>
+                        <div class="contact-role">Primary Care Nurse</div>
+                    </div>
+                    <div class="contact-status online">Online</div>
+                </div>
+                
+                <div class="contact-item" data-contact="dr-johnson">
+                    <div class="contact-avatar doctor">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-name">Dr. Johnson</div>
+                        <div class="contact-role">Primary Physician</div>
+                    </div>
+                    <div class="contact-status away">In Surgery</div>
+                </div>
+                
+                <div class="contact-item" data-contact="support-team">
+                    <div class="contact-avatar support">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-name">Support Team</div>
+                        <div class="contact-role">Technical & General Support</div>
+                    </div>
+                    <div class="contact-status online">Online</div>
+                </div>
+                
+                <div class="contact-item" data-contact="physical-therapist">
+                    <div class="contact-avatar therapist">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="contact-details">
+                        <div class="contact-name">Mike Thompson</div>
+                        <div class="contact-role">Physical Therapist</div>
+                    </div>
+                    <div class="contact-status offline">Offline</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Chat Application JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    // DOM Elements
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-message');
+    const chatMessages = document.getElementById('chat-messages');
+    const helpModal = document.getElementById('help-modal');
+    const newConversationModal = document.getElementById('new-conversation-modal');
+    const conversationSearch = document.getElementById('conversation-search');
+    
+    // Current conversation state
+    let currentConversation = 'nurse-sarah';
+    let messageCount = 0;
+
+    // Initialize chat
+    initializeChat();
+
+    // Send message function
+    function sendMessage() {
+        const message = messageInput.value.trim();
+        if (!message) return;
+        
+        // Add message to chat
+        addMessage(message, true);
+        
+        // Clear input
+        messageInput.value = '';
+        
+        // Simulate typing indicator
+        showTypingIndicator();
+        
+        // Simulate reply after 1-3 seconds
+        setTimeout(() => {
+            hideTypingIndicator();
+            const reply = generateReply(message);
+            addMessage(reply, false);
+        }, 1000 + Math.random() * 2000);
+    }
+    
+    // Generate automated replies based on message content
+    function generateReply(userMessage) {
+        const lowerMessage = userMessage.toLowerCase();
+        const replies = {
+            greeting: [
+                "Hello! How can I help you today?",
+                "Hi there! How are you feeling?",
+                "Good to hear from you! What can I assist with?"
+            ],
+            pain: [
+                "I'm sorry to hear you're in pain. I'll notify the medical team right away.",
+                "Let me check your medication schedule and see if we can adjust anything for pain relief.",
+                "Would you like me to send a nurse to check on you?"
+            ],
+            medication: [
+                "Let me check your medication schedule for you.",
+                "I'll verify your next medication time with the pharmacy.",
+                "Your medications are being administered as scheduled. Let me know if you have any concerns."
+            ],
+            appointment: [
+                "Let me check your appointment schedule.",
+                "I can help reschedule if needed. What time works better for you?",
+                "Your next appointment is confirmed. Would you like me to send you a reminder?"
+            ],
+            default: [
+                "Thank you for your message. I'll look into this for you.",
+                "I understand. Let me check on that and get back to you.",
+                "That's good to know. How can I assist you further?",
+                "I've noted that down. Is there anything else you need help with?"
+            ]
+        };
+        
+        if (lowerMessage.includes('hello') || lowerMessage.includes('hi') || lowerMessage.includes('hey')) {
+            return getRandomReply(replies.greeting);
+        } else if (lowerMessage.includes('pain') || lowerMessage.includes('hurt') || lowerMessage.includes('uncomfortable')) {
+            return getRandomReply(replies.pain);
+        } else if (lowerMessage.includes('medication') || lowerMessage.includes('pill') || lowerMessage.includes('drug')) {
+            return getRandomReply(replies.medication);
+        } else if (lowerMessage.includes('appointment') || lowerMessage.includes('schedule') || lowerMessage.includes('meeting')) {
+            return getRandomReply(replies.appointment);
+        } else {
+            return getRandomReply(replies.default);
+        }
+    }
+    
+    function getRandomReply(replyArray) {
+        return replyArray[Math.floor(Math.random() * replyArray.length)];
+    }
+    
+    // Add message to chat
+    function addMessage(text, isOwn) {
+        // Remove typing indicator if present
+        hideTypingIndicator();
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${isOwn ? 'own' : 'other'}`;
+        
+        const time = new Date().toLocaleTimeString('en-US', { 
+            hour: 'numeric', 
+            minute: '2-digit',
+            hour12: true 
+        });
+        
+        if (isOwn) {
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <div class="message-bubble">${text}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+                <div class="message-status">
+                    <i class="fas fa-check"></i>
+                </div>
+            `;
+        } else {
+            const senderName = getSenderName(currentConversation);
+            const avatarClass = getAvatarClass(currentConversation);
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar ${avatarClass}">
+                    <i class="${getAvatarIcon(currentConversation)}"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-sender">${senderName}</div>
+                    <div class="message-bubble">${text}</div>
+                    <div class="message-time">${time}</div>
+                </div>
+            `;
+        }
+        
+        chatMessages.appendChild(messageDiv);
+        scrollToBottom();
+        messageCount++;
+        
+        // Mark message as read after a delay
+        if (isOwn) {
+            setTimeout(() => {
+                const checkIcon = messageDiv.querySelector('.fa-check');
+                if (checkIcon) {
+                    checkIcon.className = 'fas fa-check-double read';
+                }
+            }, 1000);
+        }
+    }
+    
+    // Show typing indicator
+    function showTypingIndicator() {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'message other typing';
+        typingDiv.id = 'typing-indicator';
+        
+        const avatarClass = getAvatarClass(currentConversation);
+        const avatarIcon = getAvatarIcon(currentConversation);
+        const senderName = getSenderName(currentConversation);
+        
+        typingDiv.innerHTML = `
+            <div class="message-avatar ${avatarClass}">
+                <i class="${avatarIcon}"></i>
+            </div>
+            <div class="message-content">
+                <div class="message-sender">${senderName}</div>
+                <div class="message-bubble typing-bubble">
+                    <div class="typing-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        chatMessages.appendChild(typingDiv);
+        scrollToBottom();
+    }
+    
+    // Hide typing indicator
+    function hideTypingIndicator() {
+        const typingIndicator = document.getElementById('typing-indicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+    
+    // Scroll to bottom of chat
+    function scrollToBottom() {
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    // Get sender name based on conversation
+    function getSenderName(conversationId) {
+        const names = {
+            'nurse-sarah': 'Nurse Sarah',
+            'dr-johnson': 'Dr. Johnson',
+            'support-team': 'Support Team',
+            'family-mom': 'Mom',
+            'physical-therapist': 'Mike Thompson'
+        };
+        return names[conversationId] || 'Staff';
+    }
+    
+    // Get avatar class based on conversation
+    function getAvatarClass(conversationId) {
+        if (conversationId.includes('nurse')) return 'nurse';
+        if (conversationId.includes('dr') || conversationId.includes('doctor')) return 'doctor';
+        if (conversationId.includes('support')) return 'support';
+        if (conversationId.includes('family') || conversationId.includes('mom')) return 'family';
+        if (conversationId.includes('therapist')) return 'therapist';
+        return 'default';
+    }
+    
+    // Get avatar icon based on conversation
+    function getAvatarIcon(conversationId) {
+        if (conversationId.includes('nurse')) return 'fas fa-user-nurse';
+        if (conversationId.includes('dr') || conversationId.includes('doctor')) return 'fas fa-user-md';
+        if (conversationId.includes('support')) return 'fas fa-users';
+        if (conversationId.includes('family') || conversationId.includes('mom')) return 'fas fa-user';
+        if (conversationId.includes('therapist')) return 'fas fa-heartbeat';
+        return 'fas fa-user';
+    }
+    
+    // Initialize chat functionality
+    function initializeChat() {
+        scrollToBottom();
+        
+        // Event listeners
+        sendButton.addEventListener('click', sendMessage);
+        
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Focus on input when clicking anywhere in chat area
+        chatMessages.addEventListener('click', function() {
+            messageInput.focus();
+        });
+        
+        // Conversation switching
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.addEventListener('click', function() {
+                switchConversation(this.getAttribute('data-conversation'));
+            });
+        });
+        
+        // Contact selection in new conversation modal
+        document.querySelectorAll('.contact-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const contactId = this.getAttribute('data-contact');
+                startNewConversation(contactId);
+            });
+        });
+        
+        // Help request buttons
+        document.querySelectorAll('.help-option').forEach(button => {
+            button.addEventListener('click', function() {
+                const type = this.getAttribute('data-type');
+                openHelpModal(type);
+            });
+        });
+        
+        // New conversation button
+        document.getElementById('new-conversation').addEventListener('click', function() {
+            openNewConversationModal();
+        });
+        
+        // Conversation search
+        conversationSearch.addEventListener('input', function() {
+            filterConversations(this.value);
+        });
+        
+        // Initialize modal functionality
+        initializeModals();
+    }
+    
+    // Switch conversation
+    function switchConversation(conversationId) {
+        // Update active conversation in sidebar
+        document.querySelectorAll('.conversation-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        document.querySelector(`[data-conversation="${conversationId}"]`).classList.add('active');
+        
+        // Clear unread badge for this conversation
+        const activeItem = document.querySelector(`[data-conversation="${conversationId}"]`);
+        const unreadBadge = activeItem.querySelector('.unread-badge');
+        if (unreadBadge) {
+            unreadBadge.remove();
+        }
+        
+        // Update current conversation
+        currentConversation = conversationId;
+        
+        // Update chat header
+        updateChatHeader(conversationId);
+        
+        // Clear and reload messages for this conversation
+        loadConversationMessages(conversationId);
+    }
+    
+    // Update chat header based on conversation
+    function updateChatHeader(conversationId) {
+        const chatTitle = document.querySelector('.chat-title');
+        const chatStatus = document.querySelector('.chat-status');
+        const chatAvatar = document.querySelector('.chat-avatar');
+        
+        chatTitle.textContent = getSenderName(conversationId);
+        chatAvatar.className = `chat-avatar ${getAvatarClass(conversationId)}`;
+        chatAvatar.innerHTML = `<i class="${getAvatarIcon(conversationId)}"></i>`;
+        
+        // Set status based on conversation type
+        if (conversationId.includes('nurse') || conversationId.includes('support')) {
+            chatStatus.innerHTML = '<span class="status-indicator online"></span> Online - Usually replies in minutes';
+        } else if (conversationId.includes('doctor')) {
+            chatStatus.innerHTML = '<span class="status-indicator away"></span> In Surgery - May respond later';
+        } else {
+            chatStatus.innerHTML = '<span class="status-indicator offline"></span> Offline';
+        }
+    }
+    
+    // Load conversation messages (simulated)
+    function loadConversationMessages(conversationId) {
+        // Clear current messages
+        chatMessages.innerHTML = '';
+        
+        // Add date divider
+        const dateDivider = document.createElement('div');
+        dateDivider.className = 'message-divider';
+        dateDivider.innerHTML = '<span>Today</span>';
+        chatMessages.appendChild(dateDivider);
+        
+        // Add welcome message based on conversation
+        let welcomeMessage = '';
+        if (conversationId === 'nurse-sarah') {
+            welcomeMessage = "Hello! I'm Nurse Sarah, your primary care nurse. How can I help you today?";
+        } else if (conversationId === 'dr-johnson') {
+            welcomeMessage = "This is Dr. Johnson's messaging service. I'll respond to your message as soon as I'm available.";
+        } else if (conversationId === 'support-team') {
+            welcomeMessage = "Hello! This is the support team. How can we assist you today?";
+        } else if (conversationId === 'family-mom') {
+            welcomeMessage = "Hi sweetie! How are you feeling today?";
+        } else {
+            welcomeMessage = "Hello! How can I help you today?";
+        }
+        
+        addMessage(welcomeMessage, false);
+        scrollToBottom();
+    }
+    
+    // Start new conversation
+    function startNewConversation(contactId) {
+        closeNewConversationModal();
+        switchConversation(contactId);
+    }
+    
+    // Filter conversations based on search
+    function filterConversations(searchTerm) {
+        const conversations = document.querySelectorAll('.conversation-item');
+        const searchLower = searchTerm.toLowerCase();
+        
+        conversations.forEach(conversation => {
+            const title = conversation.querySelector('.conversation-title').textContent.toLowerCase();
+            const preview = conversation.querySelector('.conversation-preview').textContent.toLowerCase();
+            
+            if (title.includes(searchLower) || preview.includes(searchLower)) {
+                conversation.style.display = 'flex';
+            } else {
+                conversation.style.display = 'none';
+            }
+        });
+    }
+    
+    // Modal Functions
+    function initializeModals() {
+        // Help modal
+        document.querySelector('#help-modal .modal-close').addEventListener('click', closeHelpModal);
+        document.getElementById('cancel-help').addEventListener('click', closeHelpModal);
+        
+        document.getElementById('submit-help').addEventListener('click', function() {
+            submitHelpRequest();
+        });
+        
+        // New conversation modal
+        document.querySelector('#new-conversation-modal .modal-close').addEventListener('click', closeNewConversationModal);
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === helpModal) {
+                closeHelpModal();
+            }
+            if (e.target === newConversationModal) {
+                closeNewConversationModal();
+            }
+        });
+    }
+    
+    function openHelpModal(type) {
+        // Set values based on type
+        const priorityMap = {
+            'urgent': 'urgent',
+            'technical': 'medium',
+            'comfort': 'medium',
+            'medical': 'high'
+        };
+        
+        const categoryMap = {
+            'urgent': 'medical',
+            'technical': 'technical',
+            'comfort': 'comfort',
+            'medical': 'medical'
+        };
+        
+        document.getElementById('help-priority').value = priorityMap[type] || 'medium';
+        document.getElementById('help-category').value = categoryMap[type] || 'other';
+        
+        helpModal.style.display = 'flex';
+    }
+    
+    function closeHelpModal() {
+        helpModal.style.display = 'none';
+        document.getElementById('help-form').reset();
+    }
+    
+    function openNewConversationModal() {
+        newConversationModal.style.display = 'flex';
+    }
+    
+    function closeNewConversationModal() {
+        newConversationModal.style.display = 'none';
+    }
+    
+    function submitHelpRequest() {
+        const priority = document.getElementById('help-priority').value;
+        const category = document.getElementById('help-category').value;
+        const description = document.getElementById('help-description').value;
+        const urgentCallback = document.getElementById('urgent-callback').checked;
+        
+        if (!priority || !category || !description) {
+            showNotification('Please fill in all required fields.', 'error');
+            return;
+        }
+        
+        // Show loading state
+        const submitBtn = document.getElementById('submit-help');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+        submitBtn.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+            // Show success message
+            showNotification('Help request submitted successfully! A staff member will respond shortly.', 'success');
+            
+            // Add system message to chat
+            addMessage(`Help request submitted: ${description} (${category}, ${priority} priority${urgentCallback ? ' - Callback requested' : ''})`, false);
+            
+            // Close modal and reset
+            closeHelpModal();
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        }, 1500);
+    }
+});
+
+// Global notification function
+function showNotification(message, type) {
+    // Create notification element
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+            <span>${message}</span>
+        </div>
+        <button class="notification-close" onclick="this.parentElement.remove()">
+            <i class="fas fa-times"></i>
+        </button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Auto remove after 5 seconds
+    setTimeout(() => {
+        if (notification.parentElement) {
+            notification.remove();
+        }
+    }, 5000);
+}
+</script>
+{% endblock %}
